@@ -576,6 +576,10 @@ service qcom-c_late-sh /vendor/bin/init.class_late.sh
 
 on property:vold.decrypt=trigger_restart_framework
     start qcom-c_main-sh
+#ifdef VENDOR_EDIT
+#laichenhui@PSW.Bsp.Tp, 2018/08/21, Add to aceess data fw files
+    start bspFwUpdate
+ #endif /* VENDOR_EDIT */
     start wcnss-service
     start qcom-c_late-sh
 
@@ -1471,11 +1475,6 @@ service media-resource-reconciliation /vendor/bin/self-init reconcile_media_reso
     oneshot
     disabled
     seclabel u:r:rutilsdaemon:s0
-service ireader-version /vendor/bin/self-init get_ireader_version
-    user root
-    oneshot
-    disabled
-    seclabel u:r:rutilsdaemon:s0
 service prop-adap-core-gsi /vendor/bin/self-init gsicore
     class core
     user root
@@ -1491,9 +1490,6 @@ service prop-adap-main-gsi /vendor/bin/self-init gsimain
 
 on property:ro.oppo.reconcile_media_resource=1
     start media-resource-reconciliation
-
-on property:ro.oppo.ireader_flag=1
-    start ireader-version
 
 #endif
 
